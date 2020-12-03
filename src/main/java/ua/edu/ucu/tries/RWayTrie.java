@@ -1,4 +1,5 @@
 package ua.edu.ucu.tries;
+import ua.edu.ucu.immutable.Queue;
 
 public class RWayTrie implements Trie {
     private static final int R = 26;
@@ -11,9 +12,11 @@ public class RWayTrie implements Trie {
 
         public TrieNode(Object value) {
             content = value;
+            children = new TrieNode[R];
         }
 
         public TrieNode() {
+            children = new TrieNode[R];
         }
     }
 
@@ -35,6 +38,7 @@ public class RWayTrie implements Trie {
     @Override
     public void add(Tuple t) {
         root = insert(root, t, 0);
+        size++;
     }
 
     private TrieNode search(TrieNode node, String s, int d) {
@@ -53,24 +57,44 @@ public class RWayTrie implements Trie {
         return search(root, word, 0) != null;
     }
 
+
     @Override
     public boolean delete(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (contains(word)) {
+            TrieNode del = search(root, word, 0);
+            size--;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public Iterable<String> words() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return wordsWithPrefix("");
+    }
+
+    private void collect(TrieNode node, String prf, Queue q) {
+        if (prf == null) {
+            return;
+        }
+        if (node.content != null)  {
+            q.enqueue(prf);
+        }
+        for (char ch = 0; ch < R; ch++) {
+            collect(node.children[ch], prf + (char) (ch + charAscii), q);
+        }
     }
 
     @Override
     public Iterable<String> wordsWithPrefix(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Queue q = new Queue();
+        collect(search(root, s, 0), s, q);
+        return (Iterable<String>) q;
     }
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        return this.size;
     }
 
 }
