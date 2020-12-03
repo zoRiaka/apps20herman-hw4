@@ -46,7 +46,7 @@ public class PrefixMatches {
         Iterable<String> prefWords = this.wordsWithPrefix(pref);
         if (pref.length() >= 2) {
             for (String pw: prefWords) {
-                if (pw.length() <= pref.length() + k - 1){
+                if (pw.length() <= pref.length() + k - 1) {
                     words.add(pw);
                 }
             }
