@@ -1,6 +1,4 @@
 package ua.edu.ucu.immutable;
-
-import ua.edu.ucu.immutable.ImmutableArrayList;
 import ua.edu.ucu.immutable.ImmutableLinkedList;
 
 public class Queue {
