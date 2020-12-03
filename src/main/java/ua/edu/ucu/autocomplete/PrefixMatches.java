@@ -1,6 +1,7 @@
 package ua.edu.ucu.autocomplete;
 
 import ua.edu.ucu.tries.Trie;
+import ua.edu.ucu.tries.Tuple;
 
 import java.util.ArrayList;
 
@@ -43,13 +44,12 @@ public class PrefixMatches {
     public Iterable<String> wordsWithPrefix(String pref, int k) {
         ArrayList<String> words = new ArrayList<>();
         Iterable<String> prefWords = this.wordsWithPrefix(pref);
-        for (String pw: prefWords) {
-            if (pw.length() <= pref.length() + k - 1){
-                words.add(pw);
-            }
-        }
         if (pref.length() >= 2) {
-
+            for (String pw: prefWords) {
+                if (pw.length() <= pref.length() + k - 1){
+                    words.add(pw);
+                }
+            }
         }
         return words;
     }
